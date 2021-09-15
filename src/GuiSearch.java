@@ -16,7 +16,8 @@ public class GuiSearch implements ActionListener, DocumentListener {
 
     private JFrame frame;
     private JTextField searchBar;
-    private JTextField inputQuantity;
+    public JTextField inputQuantity;
+    private JButton searchButton;
     private JButton calcButton;
 
     public GuiSearch(){
@@ -35,12 +36,18 @@ public class GuiSearch implements ActionListener, DocumentListener {
         searchBar.setBounds(LEFT_MARGIN, TOP_MARGIN + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
         searchBar.getDocument().addDocumentListener(this);
         frame.add(searchBar);
+
         inputQuantity = new JTextField();
         inputQuantity.setBounds(LEFT_MARGIN, TOP_MARGIN*3 + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
         inputQuantity.getDocument().addDocumentListener(this);
         frame.add(inputQuantity);
 
         //buttons
+        searchButton = new JButton("Search");
+        searchButton.setBounds(LEFT_MARGIN*3, TOP_MARGIN + TEXT_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT);
+        searchButton.addActionListener(this);
+        frame.add(searchButton);
+
         calcButton = new JButton("Calculate Rate");
         calcButton.setBounds(LEFT_MARGIN*3, TOP_MARGIN*3 + TEXT_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT);
         calcButton.addActionListener(this);
@@ -55,6 +62,10 @@ public class GuiSearch implements ActionListener, DocumentListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Search")) {
+            Inventory searchPaper = new Inventory();
+            searchPaper.search(inputQuantity.getText(),30);
+        }
         if (e.getActionCommand().equals("Calculate Rate")) {
             MagazinePaper calc = new MagazinePaper();
             calc.calculate();
