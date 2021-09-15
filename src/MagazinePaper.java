@@ -9,8 +9,8 @@ public class MagazinePaper extends OrderPlacing {
         System.out.println("Enter quantity ");
         int qty;
         qty= in.nextInt();
-        int cost = rate*qty ;
-
+        int cost;
+         cost   = rate*qty ;
         return cost;
        // return value then put into j label
 
