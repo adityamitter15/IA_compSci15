@@ -4,18 +4,6 @@ import java.util.Scanner;
 public class MagazinePaper extends OrderPlacing {
     private final int rate = 550 ;
 
-    public int calculate(){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter quantity ");
-        int qty;
-        qty= in.nextInt();
-        int cost;
-         cost   = rate*qty ;
-        return cost;
-       // return value then put into j label
-
-    }
-
     private final int FRAME_WIDTH = 400;
     private final int FRAME_HEIGHT = 500;
     private final int LEFT_MARGIN = 160;
@@ -34,7 +22,7 @@ public class MagazinePaper extends OrderPlacing {
     private JTextField sizeField;
     private JTextField quantityField;
     public MagazinePaper() {
-
+        System.out.println("Constructing...");
         frame = new JFrame();
 
         // Instructions on the labels
@@ -121,5 +109,16 @@ public class MagazinePaper extends OrderPlacing {
             System.out.println("Chosen Quantity: " + quantityInput+ " tonnes");
             okButton.setEnabled(false);
         }
+    }
+    public int calculate(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter quantity ");
+        int qty;
+        qty= in.nextInt();
+        int cost;
+        cost   = rate*qty ;
+        return cost;
+        // return value then put into j label
+
     }
 }

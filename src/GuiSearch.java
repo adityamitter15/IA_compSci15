@@ -15,8 +15,10 @@ public class GuiSearch implements ActionListener, DocumentListener {
     private final int BUTTON_HEIGHT = 30;
 
     private JFrame frame;
+    private JTextField filter;
     private JTextField searchBar;
     public JTextField inputQuantity;
+    private JButton filterButton;
     private JButton searchButton;
     private JButton calcButton;
 
@@ -27,11 +29,18 @@ public class GuiSearch implements ActionListener, DocumentListener {
         JLabel instructions1 = new JLabel("Search for a paper type: ");
         instructions1.setBounds(LEFT_MARGIN, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
         frame.add(instructions1);
+
         JLabel instructions2 = new JLabel("Enter Quantity (15-25t / vessel): ");
         instructions2.setBounds(LEFT_MARGIN, TOP_MARGIN*3, TEXT_WIDTH, TEXT_HEIGHT);
         frame.add(instructions2);
 
         //Input text fields
+        filter = new JTextField();
+        filter.setBounds(LEFT_MARGIN, TOP_MARGIN + TEXT_HEIGHT*2, TEXT_WIDTH, TEXT_HEIGHT);
+        filter.getDocument().addDocumentListener(this);
+        frame.add(filter);
+        filter.setVisible(false);
+
         searchBar = new JTextField();
         searchBar.setBounds(LEFT_MARGIN, TOP_MARGIN + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
         searchBar.getDocument().addDocumentListener(this);
@@ -43,6 +52,11 @@ public class GuiSearch implements ActionListener, DocumentListener {
         frame.add(inputQuantity);
 
         //buttons
+        filterButton = new JButton("Filter (optional)");
+        filterButton.setBounds(LEFT_MARGIN*3, TOP_MARGIN + TEXT_HEIGHT*2 , BUTTON_WIDTH, BUTTON_HEIGHT);
+        filterButton.addActionListener(this);
+        frame.add(filterButton);
+
         searchButton = new JButton("Search");
         searchButton.setBounds(LEFT_MARGIN*3, TOP_MARGIN + TEXT_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT);
         searchButton.addActionListener(this);
@@ -64,7 +78,15 @@ public class GuiSearch implements ActionListener, DocumentListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Search")) {
             Inventory searchPaper = new Inventory();
-            searchPaper.search(inputQuantity.getText(),30);
+            System.out.println("Searching for " + searchBar.getText());
+            if(searchBar.getText().equals("")){
+                searchPaper.search(searchBar.getText(),-1);
+            }else{
+                searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()));
+            }
+        }
+        if (e.getActionCommand().equals("Filter (optional)")) {
+            filter.setVisible(true);
         }
         if (e.getActionCommand().equals("Calculate Rate")) {
             MagazinePaper calc = new MagazinePaper();

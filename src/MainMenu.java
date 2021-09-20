@@ -6,10 +6,11 @@ public class MainMenu {
     public static void main(String[] args) {
         //new OrderPlacing();
         //new Login();
+
         new GuiSearch();
 
-        MagazinePaper calc = new MagazinePaper();
-        calc.calculate();
+        //MagazinePaper calc = new MagazinePaper();
+        //calc.calculate();
         //you get the info and updates of the company
         Inventory paper = new Inventory();
         Scanner in = new Scanner(System.in);
