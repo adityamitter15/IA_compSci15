@@ -21,6 +21,7 @@ public class GuiSearch implements ActionListener, DocumentListener {
     private JButton filterButton;
     private JButton searchButton;
     private JButton calcButton;
+    private JComboBox filterCombo;
 
     public GuiSearch(){
         frame= new JFrame();
@@ -67,6 +68,14 @@ public class GuiSearch implements ActionListener, DocumentListener {
         calcButton.addActionListener(this);
         frame.add(calcButton);
 
+        //combo box
+        String[] filterTypes = {"GSM", "Width", "Brightness", "Weight"};
+        filterCombo = new JComboBox(filterTypes);
+        filterCombo.setBounds(LEFT_MARGIN*5, TOP_MARGIN + TEXT_HEIGHT*2 , BUTTON_WIDTH, BUTTON_HEIGHT);
+        filterCombo.addActionListener(this);
+        frame.add(filterCombo);
+        filterCombo.setVisible(false);
+
         //other frame attributes
         frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
         frame.setLayout(null);
@@ -86,6 +95,9 @@ public class GuiSearch implements ActionListener, DocumentListener {
             }
         }
         if (e.getActionCommand().equals("Filter (optional)")) {
+            filterCombo.setVisible(true);
+        }
+        if(e.getSource() == filterCombo){
             filter.setVisible(true);
         }
         if (e.getActionCommand().equals("Calculate Rate")) {
