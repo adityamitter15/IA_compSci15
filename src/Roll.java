@@ -1,15 +1,17 @@
 public class Roll {
     //a single roll of bulk paper
     private int gsm;
-    private int size;
+    private int width;
+    private int brightness;
     private double weight;
     private String name;
 
-    public Roll(String name, int gsm,int size,double weight ){
+    public Roll(String name, int gsm, int width, int brightness, double weight ){
 
         this.name=name;
         this.gsm=gsm;
-        this.size=size;
+        this.width=width;
+        this.brightness=brightness;
         this.weight=weight;
     }
     public String getName(){
@@ -18,8 +20,11 @@ public class Roll {
     public int getGsm(){
         return gsm;
     }
-    public int getSize(){
-        return size;
+    public int getWidth(){
+        return width;
+    }
+    public int getBrightness(){
+        return brightness;
     }
     public double getWeight(){
         return weight;
@@ -31,7 +36,7 @@ public class Roll {
     //tensibility
     //wet strength
     public void display(){
-        System.out.println(name + ", " + gsm + ", " + size + ", "+ weight);
+        System.out.println(name + ", " + gsm + ", " + width + ", " + brightness + ", "+ weight);
     }
 
 }

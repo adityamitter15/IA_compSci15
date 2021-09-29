@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Inventory {
 
@@ -28,6 +27,7 @@ public class Inventory {
                 if (!name.equals("TOTAL")) {
                     int gsm = 0;
                     int width = 0;
+                    int brightness = 0;
                     double weight = 0;
                     if (details.length >= 2) {
                         gsm = Integer.parseInt(details[1].trim());
@@ -36,10 +36,13 @@ public class Inventory {
                         width = Integer.parseInt(details[2].trim());
                     }
                     if (details.length >= 4) {
+                        brightness = Integer.parseInt(details[3].trim());
+                    }
+                    if (details.length >= 5) {
                         weight = Double.parseDouble(details[4].trim());
                     }
 
-                    Roll newRoll = new Roll(name, gsm, width, weight);
+                    Roll newRoll = new Roll(name, gsm, width, brightness, weight);
                     currentStock.add(newRoll);
 
                 }
@@ -52,16 +55,17 @@ public class Inventory {
             e.printStackTrace();
         }
     }
-    public void search(String input, int gsm) {
+    public String search(String input, int gsm, int width, int brightness, double weight) {
 
         for (int j = 0; j < currentStock.size(); j++) {
             //System.out.println(currentStock.get(j).getName());
             //when u type in the first field, it prints out whole row
-            if (input.equals(currentStock.get(j).getName()) && (gsm == currentStock.get(j).getGsm() || gsm == -1)) {
+            if (input.equals(currentStock.get(j).getName()) && (((gsm == currentStock.get(j).getGsm() || gsm == -1)) || (width == currentStock.get(j).getWidth() || width == -1) || (brightness == currentStock.get(j).getBrightness() || brightness == -1) || (weight == currentStock.get(j).getWeight() || weight == -1))) {
                 System.out.print("Search found: ");
                 currentStock.get(j).display();
             }
         }
+        return input;
     }
 }
 

@@ -18,7 +18,13 @@ public class MainMenu {
         String input = in.nextLine();
         System.out.println("Search GSM: ");
         int gsm= in.nextInt();
-        paper.search(input, gsm);
+        System.out.println("Search width: ");
+        int width= in.nextInt();
+        System.out.println("Search brightness: ");
+        int brightness= in.nextInt();
+        System.out.println("Search weight: ");
+        double weight= in.nextDouble();
+        paper.search(input, gsm, width, brightness, weight);
 
     }
 }

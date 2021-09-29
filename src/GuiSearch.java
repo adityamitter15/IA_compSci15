@@ -15,10 +15,12 @@ public class GuiSearch implements ActionListener, DocumentListener {
     private final int BUTTON_HEIGHT = 30;
 
     private JFrame frame;
+    private JLabel instructions1;
+    private JLabel instructions2;
+    private JLabel outputText;
     private JTextField filter;
     private JTextField searchBar;
     public JTextField inputQuantity;
-    private JButton filterButton;
     private JButton searchButton;
     private JButton calcButton;
     private JComboBox filterCombo;
@@ -27,20 +29,24 @@ public class GuiSearch implements ActionListener, DocumentListener {
         frame= new JFrame();
 
         //Instructions on the labels
-        JLabel instructions1 = new JLabel("Search for a paper type: ");
+        instructions1 = new JLabel("Search for a paper type: ");
         instructions1.setBounds(LEFT_MARGIN, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
         frame.add(instructions1);
 
-        JLabel instructions2 = new JLabel("Enter Quantity (15-25t / vessel): ");
+        instructions2 = new JLabel("Enter Quantity (15-25t / vessel): ");
         instructions2.setBounds(LEFT_MARGIN, TOP_MARGIN*3, TEXT_WIDTH, TEXT_HEIGHT);
         frame.add(instructions2);
+
+        outputText = new JLabel();
+        outputText.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
+        frame.add(outputText);
 
         //Input text fields
         filter = new JTextField();
         filter.setBounds(LEFT_MARGIN, TOP_MARGIN + TEXT_HEIGHT*2, TEXT_WIDTH, TEXT_HEIGHT);
         filter.getDocument().addDocumentListener(this);
         frame.add(filter);
-        filter.setVisible(false);
+        filter.setEnabled(false);
 
         searchBar = new JTextField();
         searchBar.setBounds(LEFT_MARGIN, TOP_MARGIN + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
@@ -53,11 +59,6 @@ public class GuiSearch implements ActionListener, DocumentListener {
         frame.add(inputQuantity);
 
         //buttons
-        filterButton = new JButton("Filter (optional)");
-        filterButton.setBounds(LEFT_MARGIN*3, TOP_MARGIN + TEXT_HEIGHT*2 , BUTTON_WIDTH, BUTTON_HEIGHT);
-        filterButton.addActionListener(this);
-        frame.add(filterButton);
-
         searchButton = new JButton("Search");
         searchButton.setBounds(LEFT_MARGIN*3, TOP_MARGIN + TEXT_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT);
         searchButton.addActionListener(this);
@@ -69,12 +70,11 @@ public class GuiSearch implements ActionListener, DocumentListener {
         frame.add(calcButton);
 
         //combo box
-        String[] filterTypes = {"GSM", "Width", "Brightness", "Weight"};
+        String[] filterTypes = {"Choose Filter","GSM", "Width", "Brightness", "Weight"};
         filterCombo = new JComboBox(filterTypes);
-        filterCombo.setBounds(LEFT_MARGIN*5, TOP_MARGIN + TEXT_HEIGHT*2 , BUTTON_WIDTH, BUTTON_HEIGHT);
+        filterCombo.setBounds(LEFT_MARGIN*3, TOP_MARGIN + TEXT_HEIGHT*2 , BUTTON_WIDTH, BUTTON_HEIGHT);
         filterCombo.addActionListener(this);
         frame.add(filterCombo);
-        filterCombo.setVisible(false);
 
         //other frame attributes
         frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -87,18 +87,29 @@ public class GuiSearch implements ActionListener, DocumentListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Search")) {
             Inventory searchPaper = new Inventory();
+            outputText.setText(searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText())));
             System.out.println("Searching for " + searchBar.getText());
             if(searchBar.getText().equals("")){
-                searchPaper.search(searchBar.getText(),-1);
+                searchPaper.search(searchBar.getText(),-1, -1, -1, -1);
             }else{
-                searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()));
+                searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
             }
         }
-        if (e.getActionCommand().equals("Filter (optional)")) {
-            filterCombo.setVisible(true);
-        }
         if(e.getSource() == filterCombo){
-            filter.setVisible(true);
+            JComboBox cb = (JComboBox)e.getSource();
+            String msg = (String)cb.getSelectedItem();
+            switch (msg) {
+                case "GSM": outputText.setText("Searching with Chosen GSM");
+                    break;
+                case "Width": outputText.setText("Searching with Chosen Width");
+                    break;
+                case "Brightness": outputText.setText("Searching with Chosen Brightness");
+                    break;
+                case "Weight": outputText.setText("Searching with Chosen Weight");
+                    break;
+                default: outputText.setText("An error occurred");
+            }
+            filter.setEnabled(true);
         }
         if (e.getActionCommand().equals("Calculate Rate")) {
             MagazinePaper calc = new MagazinePaper();
