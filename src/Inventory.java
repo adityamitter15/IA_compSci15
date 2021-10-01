@@ -56,7 +56,7 @@ public class Inventory {
         }
     }
     public ArrayList<String> search(String input, int gsm, int width, int brightness, double weight) {
-
+        // move this method out
         ArrayList<String> results = new ArrayList<>();
         for (int j = 0; j < currentStock.size(); j++) {
             //System.out.println(currentStock.get(j).getName());
