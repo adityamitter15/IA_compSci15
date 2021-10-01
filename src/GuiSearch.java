@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class GuiSearch implements ActionListener, DocumentListener {
 
@@ -17,7 +18,8 @@ public class GuiSearch implements ActionListener, DocumentListener {
     private JFrame frame;
     private JLabel instructions1;
     private JLabel instructions2;
-    private JLabel outputText;
+    private JList searchResults;
+    private DefaultListModel<String> searchResultsList;
     private JTextField filter;
     private JTextField searchBar;
     public JTextField inputQuantity;
@@ -37,9 +39,11 @@ public class GuiSearch implements ActionListener, DocumentListener {
         instructions2.setBounds(LEFT_MARGIN, TOP_MARGIN*3, TEXT_WIDTH, TEXT_HEIGHT);
         frame.add(instructions2);
 
-        outputText = new JLabel();
-        outputText.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
-        frame.add(outputText);
+        //JList
+        DefaultListModel searchResultsList = new DefaultListModel();
+        searchResults = new JList(searchResultsList);
+        searchResults.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
+        frame.add(searchResults);
 
         //Input text fields
         filter = new JTextField();
@@ -87,7 +91,12 @@ public class GuiSearch implements ActionListener, DocumentListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Search")) {
             Inventory searchPaper = new Inventory();
-            outputText.setText(searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText())));
+            ArrayList<String> results;
+
+            results = searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
+            for(String s : results){
+                searchResultsList.addElement(s);
+            }
             System.out.println("Searching for " + searchBar.getText());
             if(searchBar.getText().equals("")){
                 searchPaper.search(searchBar.getText(),-1, -1, -1, -1);
@@ -98,7 +107,7 @@ public class GuiSearch implements ActionListener, DocumentListener {
         if(e.getSource() == filterCombo){
             JComboBox cb = (JComboBox)e.getSource();
             String msg = (String)cb.getSelectedItem();
-            switch (msg) {
+            /*switch (msg) {
                 case "GSM": outputText.setText("Searching with Chosen GSM");
                     break;
                 case "Width": outputText.setText("Searching with Chosen Width");
@@ -108,7 +117,7 @@ public class GuiSearch implements ActionListener, DocumentListener {
                 case "Weight": outputText.setText("Searching with Chosen Weight");
                     break;
                 default: outputText.setText("An error occurred");
-            }
+            }*/
             filter.setEnabled(true);
         }
         if (e.getActionCommand().equals("Calculate Rate")) {

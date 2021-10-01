@@ -35,8 +35,12 @@ public class Roll {
     //brightness
     //tensibility
     //wet strength
+    public String toString(){
+        return name + ", " + gsm + ", " + width + ", " + brightness + ", "+ weight;
+    }
+
     public void display(){
-        System.out.println(name + ", " + gsm + ", " + width + ", " + brightness + ", "+ weight);
+        System.out.println(toString());
     }
 
 }
