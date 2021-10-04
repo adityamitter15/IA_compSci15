@@ -55,21 +55,24 @@ public class Inventory {
             e.printStackTrace();
         }
     }
-    public ArrayList<String> search(String input, int gsm, int width, int brightness, double weight) {
-        // move this method out
+    public java.util.ArrayList<String> getResults() {
         ArrayList<String> results = new ArrayList<>();
+        return results;
+    }
+    public void ArrayList<String> void search(String input, int gsm, int width, int brightness, double weight) {
+        // move this method out
         for (int j = 0; j < currentStock.size(); j++) {
             //System.out.println(currentStock.get(j).getName());
             //when u type in the first field, it prints out whole row
             if (input.equals(currentStock.get(j).getName()) && (((gsm == currentStock.get(j).getGsm() || gsm == -1)) || (width == currentStock.get(j).getWidth() || width == -1) || (brightness == currentStock.get(j).getBrightness() || brightness == -1) || (weight == currentStock.get(j).getWeight() || weight == -1))) {
                 System.out.print("Search found: ");
                 currentStock.get(j).display();
-                results.add(currentStock.get(j).toString());
+                getResults().results.add(currentStock.get(j).toString());
             }
         }
-        System.out.println(results.size() + " gguiggg");
-        return results;
+        System.out.println(getResults().results.size() + " gguiggg");
     }
+
 }
 
 
