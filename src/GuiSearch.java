@@ -26,6 +26,7 @@ public class GuiSearch implements ActionListener, DocumentListener {
     private JButton searchButton;
     private JButton calcButton;
     private JComboBox filterCombo;
+    //TODO add JList
 
     public GuiSearch(){
         frame= new JFrame();
