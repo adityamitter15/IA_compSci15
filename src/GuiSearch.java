@@ -42,7 +42,7 @@ public class GuiSearch implements ActionListener, DocumentListener {
         frame.add(instructions2);
 
         //JList
-        DefaultListModel searchResultsList = new DefaultListModel();
+        searchResultsList = new DefaultListModel();
         searchResults = new JList(searchResultsList);
         searchResults.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
         frame.add(searchResults);
@@ -95,15 +95,16 @@ public class GuiSearch implements ActionListener, DocumentListener {
             Inventory searchPaper = new Inventory();
             ArrayList<String> results;
 
-            results = searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
+            //results = searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
+
+            System.out.println("Searching for " + searchBar.getText());
+            if(filter.getText().equals("")){
+               results = searchPaper.search(searchBar.getText(),-1, -1, -1, -1);
+            }else{
+                results = searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
+            }
             for(String s : results){
                 searchResultsList.addElement(s);
-            }
-            System.out.println("Searching for " + searchBar.getText());
-            if(searchBar.getText().equals("")){
-                searchPaper.search(searchBar.getText(),-1, -1, -1, -1);
-            }else{
-                searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
             }
         }
         if(e.getSource() == filterCombo){
