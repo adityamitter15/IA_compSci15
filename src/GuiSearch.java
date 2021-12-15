@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -26,8 +27,6 @@ public class GuiSearch implements ActionListener, DocumentListener {
     private JButton searchButton;
     private JButton calcButton;
     private JComboBox filterCombo;
-    //TODO add JList
-    //then add click buttons
 
     public GuiSearch(){
         frame= new JFrame();
@@ -44,8 +43,21 @@ public class GuiSearch implements ActionListener, DocumentListener {
         //JList
         searchResultsList = new DefaultListModel();
         searchResults = new JList(searchResultsList);
-        searchResults.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH, TEXT_HEIGHT);
+        searchResults.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH + 50,TEXT_HEIGHT*5);
         frame.add(searchResults);
+        searchResults.setVisible(false);
+        /**
+         * action listner
+         * arraylist selected
+         * selected.add(searchResults.getSelectedItem)
+         */
+        searchResultsList.
+        @Override
+        public void actionPerformed(ListSelectionEvent e) {
+            String selectedItem = (String) searchResults.getSelectedValue();
+            ArrayList<String> selectedItems = new ArrayList<>();
+            selectedItems.add(selectedItem);
+        }
 
         //Input text fields
         filter = new JTextField();
@@ -103,6 +115,8 @@ public class GuiSearch implements ActionListener, DocumentListener {
             }else{
                 results = searchPaper.search(searchBar.getText(),Integer.parseInt(filter.getText()),Integer.parseInt(filter.getText()), Integer.parseInt(filter.getText()), Double.parseDouble(filter.getText()));
             }
+            searchResults.setVisible(true);
+            searchResultsList.add(0,new String( "Quality,\tGSM,\tWidth,\tBrightness,\tWeight"));
             for(String s : results){
                 searchResultsList.addElement(s);
             }
