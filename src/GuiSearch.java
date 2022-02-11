@@ -43,6 +43,8 @@ public class GuiSearch implements ActionListener, DocumentListener {
         //JList
         searchResultsList = new DefaultListModel();
         searchResults = new JList(searchResultsList);
+        searchResultsList.addListSelectionListener(
+                new SharedListSelectionHandler());
         searchResults.setBounds(LEFT_MARGIN*5, TOP_MARGIN, TEXT_WIDTH + 50,TEXT_HEIGHT*5);
         frame.add(searchResults);
         searchResults.setVisible(false);
@@ -51,13 +53,7 @@ public class GuiSearch implements ActionListener, DocumentListener {
          * arraylist selected
          * selected.add(searchResults.getSelectedItem)
          */
-        searchResultsList.
-        @Override
-        public void actionPerformed(ListSelectionEvent e) {
-            String selectedItem = (String) searchResults.getSelectedValue();
-            ArrayList<String> selectedItems = new ArrayList<>();
-            selectedItems.add(selectedItem);
-        }
+        searchResultsList.toArray();
 
         //Input text fields
         filter = new JTextField();
@@ -99,6 +95,12 @@ public class GuiSearch implements ActionListener, DocumentListener {
         frame.setLayout(null);
         frame.setVisible(true);
 
+    }
+    @Override
+    public void actionPerformed(ListSelectionEvent e) {
+        String selectedItem = (String) searchResults.getSelectedValue();
+        ArrayList<String> selectedItems = new ArrayList<>();
+        selectedItems.add(selectedItem);
     }
 
     @Override
